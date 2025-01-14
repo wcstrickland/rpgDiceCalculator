@@ -137,23 +137,27 @@ class Calculator {
     if (number.toString().includes('d')) {
 
 
+      //strip duplicate d's
       if (this.containsDuplicatDs(number.toString())) {
         let newString = this.stripTrailingDs(number.toString())
         this.currentOperand = newString
         return this.currentOperand
       }
 
+      // if last char is d keep going
       if (this.lastCharIsD(number.toString())) {
         let newString = this.stripTrailingDs(number.toString())
         this.currentOperand = newString
         return this.currentOperand
       }
       
+      // if last char is 1 or 2 keep going for 12 and 20's
       if(this.lastCharis1or2(number.toString())){
         let newString = this.stripTrailingDs(number.toString())
         this.currentOperand = newString
         return this.currentOperand
       }
+      // otherwise roll the dice
       else{
         let diceString = this.currentOperand.split('d');
         this.currentOperand = this.roll(diceString[0], diceString[1])
