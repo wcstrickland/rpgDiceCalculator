@@ -132,7 +132,7 @@ document.addEventListener('keydown', function(event) {
     calculator.chooseOperation('-')
     calculator.updateDisplay()
   }
-  if(event.key === 'd' || event.key === '*' || event.key === 'D'){
+  if(event.key === 'd' || event.key === '.' || event.key === 'D'){
     calculator.appendNumber('d')
     calculator.updateDisplay()
   }
