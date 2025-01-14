@@ -25,7 +25,12 @@ class Calculator {
       total += instance
       resultString += `${instance.toString()} `
     }
-    console.log(`Rolled ${number}d${sides} (${resultString}) for a total of ${total}`)
+    let outPutString = `Rolled ${number}d${sides} (${resultString}) for a total of ${total}`
+    outPutString = outPutString.substring(0,80)
+    let rollText = document.querySelector('#roll')
+    if (rollText) {
+      rollText.innerHTML = outPutString
+    }
     return total
   }
 
@@ -242,6 +247,10 @@ equalsButton.addEventListener('click', button => {
 
 allClearButton.addEventListener('click', button => {
   calculator.clear()
+  let rollText = document.querySelector('#roll')
+  if (rollText) {
+    rollText.innerHTML = ''
+  }
   calculator.updateDisplay()
 })
 
