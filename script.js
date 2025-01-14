@@ -26,6 +26,9 @@ class Calculator {
       resultString += `${instance.toString()} `
     }
     let outPutString = `Rolled ${number}d${sides} (${resultString}) for a total of ${total}`
+    if(number === 8 && sides === 6 ){
+      outPutString = `🔥Rolled ${number}d${sides} (${resultString}) for a total of ${total}🔥`
+    }
     outPutString = outPutString.substring(0,80)
     let rollText = document.querySelector('#roll')
     if (rollText) {
