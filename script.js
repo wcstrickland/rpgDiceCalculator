@@ -18,10 +18,14 @@ class Calculator {
   roll(number, sides) {
     number = parseInt(number)
     sides = parseInt(sides)
+    let resultString = '';
     let total = 0
     for (let i = 0; i < number; i++) {
-      total += this.getRandomNumber(1, sides)
+      let instance = this.getRandomNumber(1, sides)
+      total += instance
+      resultString += `${instance.toString()} `
     }
+    console.log(`Rolled ${number}d${sides} (${resultString}) for a total of ${total}`)
     return total
   }
 
@@ -70,18 +74,27 @@ class Calculator {
   }
 
   getDisplayNumber(number) {
-    if(number.toString().includes('d')){
-      if(number.toString()[number.toString().length - 1] === 'd' && number.toString()[number.toString().length - 2] === 'd'){
-        this.currentOperand = number.toString().substring(0, number.toString().length - 1)
-        return this.currentOperand
-      }
-      if(number.toString()[number.toString().length - 1] === 'd'){
+    if (number.toString().includes('d')) {
+
+      if (number.toString()[number.toString().length - 1] === 'd') {
+        if (number.toString()[number.toString().length - 2] === 'd') {
+          this.currentOperand = number.toString().substring(0, number.toString().length - 1)
+          return this.currentOperand
+        }
         return number
       }
-      let diceString = this.currentOperand.split('d');
-      this.currentOperand = this.roll(diceString[0], diceString[1])
-      return this.currentOperand
-    }else{
+
+      if ((number.toString().length >= 1 && number.toString().length <= 3)  && (number.toString()[number.toString().length - 1] === '1' || number.toString()[number.toString().length - 1] === '2')) {
+        this.currentOperand = number.toString()
+        return this.currentOperand
+
+      } else {
+        let diceString = this.currentOperand.split('d');
+        this.currentOperand = this.roll(diceString[0], diceString[1])
+        return this.currentOperand
+      }
+
+    } else {
       return number
     }
   }
@@ -109,29 +122,29 @@ const currentOperandTextElement = document.querySelector('[data-current-operand]
 
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
 
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
   // Check if the pressed key is a number
   if (event.key >= '0' && event.key <= '9') {
     calculator.appendNumber(event.key)
     calculator.updateDisplay()
   }
-  if(event.key === 'Enter'){
+  if (event.key === 'Enter') {
     calculator.compute()
     calculator.updateDisplay()
   }
-  if(event.key === 'Backspace'){
+  if (event.key === 'Backspace') {
     calculator.delete()
     calculator.updateDisplay()
   }
-  if(event.key === '+'){
+  if (event.key === '+') {
     calculator.chooseOperation('+')
     calculator.updateDisplay()
   }
-  if(event.key === '-'){
+  if (event.key === '-') {
     calculator.chooseOperation('-')
     calculator.updateDisplay()
   }
-  if(event.key === 'd' || event.key === '.' || event.key === 'D'){
+  if (event.key === 'd' || event.key === '.' || event.key === 'D') {
     calculator.appendNumber('d')
     calculator.updateDisplay()
   }
