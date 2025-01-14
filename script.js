@@ -70,7 +70,6 @@ class Calculator {
   }
 
   getDisplayNumber(number) {
-    console.log({number})
     if(number.toString().includes('d')){
       if(number.toString()[number.toString().length - 1] === 'd' && number.toString()[number.toString().length - 2] === 'd'){
         this.currentOperand = number.toString().substring(0, number.toString().length - 1)
