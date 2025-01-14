@@ -15,10 +15,10 @@ body {
   justify-content: center;
   align-content: center;
   padding:5px;
-  min-height: 75vh;
+  /* min-height: 75vh; */
   max-width: 350px;
   grid-template-columns: repeat(4, 85px);
-  grid-template-rows: minmax(90px, auto) repeat(7, 90px);
+  grid-template-rows: repeat(6, 80px);
 }
 
 .calculator-grid > button {
