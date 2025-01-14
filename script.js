@@ -38,6 +38,66 @@ class Calculator {
     this.currentOperand = this.currentOperand.toString() + number.toString()
   }
 
+  stripTrailingDs(string){
+    let stringArray = string.split('')
+    let newString = ''
+    let found = false
+    for (const element of stringArray) {
+      if(element === 'd' && !found){
+        newString += element
+        found = true
+      }
+      if(element !== 'd'){
+        newString += element
+      }
+    }
+    return newString
+  }
+
+  lastCharIsD(string){
+    let stringArray = string.split('')
+    if(stringArray[stringArray.length - 1] === 'd'){
+      return true
+    }
+    return false
+  }
+
+  lastCharis1or2(string){
+    let stringArray = string.split('')
+    console.log(stringArray)
+    if(stringArray[stringArray.length - 2] === '1' && stringArray[stringArray.length - 1] === '2'){
+      return false
+    }
+    if(stringArray[stringArray.length - 2] === '2' && stringArray[stringArray.length - 1] === '2'){
+      return false
+    }
+    if(stringArray[stringArray.length - 2] === '2' && stringArray[stringArray.length - 1] === '1'){
+      return false
+    }
+    if(stringArray[stringArray.length - 2] === '1' && stringArray[stringArray.length - 1] === '1'){
+      return false
+    }
+    if(stringArray[stringArray.length - 1] === '1' || stringArray[stringArray.length - 1] === '2'){
+      return true
+    }
+    return false
+  }
+
+
+  containsDuplicatDs(string){
+    let numDs = 0
+    let stringArray = string.split('')
+    for (const element of stringArray) {
+      if(element === 'd'){
+        numDs++
+      }
+     if(numDs > 1){
+       return true
+     }
+    }
+    return false
+  }
+
   chooseOperation(operation) {
     if (this.currentOperand === '') return
     if (this.previousOperand !== '') {
@@ -76,25 +136,32 @@ class Calculator {
   getDisplayNumber(number) {
     if (number.toString().includes('d')) {
 
-      if (number.toString()[number.toString().length - 1] === 'd') {
-        if (number.toString()[number.toString().length - 2] === 'd') {
-          this.currentOperand = number.toString().substring(0, number.toString().length - 1)
-          return this.currentOperand
-        }
-        return number
+
+      if (this.containsDuplicatDs(number.toString())) {
+        let newString = this.stripTrailingDs(number.toString())
+        this.currentOperand = newString
+        return this.currentOperand
       }
 
-      if ((number.toString().length >= 1 && number.toString().length <= 3)  && (number.toString()[number.toString().length - 1] === '1' || number.toString()[number.toString().length - 1] === '2')) {
-        this.currentOperand = number.toString()
+      if (this.lastCharIsD(number.toString())) {
+        let newString = this.stripTrailingDs(number.toString())
+        this.currentOperand = newString
         return this.currentOperand
-
-      } else {
+      }
+      
+      if(this.lastCharis1or2(number.toString())){
+        let newString = this.stripTrailingDs(number.toString())
+        this.currentOperand = newString
+        return this.currentOperand
+      }
+      else{
         let diceString = this.currentOperand.split('d');
         this.currentOperand = this.roll(diceString[0], diceString[1])
         return this.currentOperand
       }
 
-    } else {
+    } 
+    else {
       return number
     }
   }
